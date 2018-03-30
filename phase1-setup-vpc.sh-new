@@ -1,0 +1,37 @@
+#!/bin/bash
+
+source "$(dirname $(readlink -f "$0"))/bashsteps-bash-utils-jan2017.source" || exit
+
+new_dir="$1"
+terraform_dir="$2"
+
+[ "$terraform_dir" = "" ] && terraform_dir="$ORGCODEDIR/terraform"
+
+thisfile="${0##*/}"
+mainscript="${thisfile%-new}"
+
+[ -d "$terraform_dir" ] || iferr_exit "second parameter is a link to the terraform files for the VPC"
+
+standard_datadir_setup()
+{
+    ## If this file's name is the main script's filename + "-new", then
+    ## the following lines of code should be reusable:
+    [ "$thisfile" != "$mainscript" ] || iferr_exit 'required filename pattern not followed'
+    [ "$new_dir" != "" ] || iferr_exit "First parameter should be the emacs build directory"
+    [ -d "$new_dir" ] && just_exit "$new_dir already exists"
+    eval_iferr_exit 'mkdir -p "$new_dir"'
+    eval_iferr_exit 'DATADIR="$(readlink -f "$new_dir")"'
+    ln -s "$ORGCODEDIR/$mainscript" "$new_dir" || iferr_exit "ln to $mainscript"
+}
+standard_datadir_setup
+
+# install the matching destroy script too
+ln -s "$ORGCODEDIR/${mainscript/setup/destroy}" "$new_dir" || iferr_exit "ln to ${mainscript/setup/destroy}"
+
+mkdir "$DATADIR/terraform"
+cp -a "$(absdirectory "$terraform_dir")"/* "$DATADIR/terraform"
+
+cat  >>"$DATADIR/datadir.conf" <<EOF || iferr_exit "datadir.conf init failed for $thisfile"
+EOF
+
+echo "Success"
