@@ -6,6 +6,8 @@ source "$(dirname $(readlink -f "$0"))/bashsteps-defaults-jan2017-check-and-do.s
 
 "$DATADIR/aws/phase1-setup-aws-web-vms.sh" ; $iferr_exit
 
+"$DATADIR/aws/phase1-setup-aws-rds-vm.sh" ; $iferr_exit
+
 extractIP()
 {
     vmname="$1"
@@ -28,8 +30,7 @@ extractIP()
     $starting_group "Extract IP addresses from terraform"
     false
     $skip_group_if_unnecessary
-    extractIP web1vm module.web1vm.aws_eip_association.web_eip_assoc
-    extractIP web2vm module.web2vm.aws_eip_association.web_eip_assoc
+    extractIP stepvm module.stepvm.aws_eip_association.step_eip_assoc
 ) ; $iferr_exit
 
 source "$DATADIR/datadir.conf"

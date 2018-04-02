@@ -21,11 +21,6 @@ data "aws_ami" "centos_ami" {
 
 ### CentOS WEB VM INSTANCES
 
-resource "aws_eip_association" "web_eip_assoc" {
-  allocation_id = "${var.web_server_eip_id}"
-  network_interface_id = "${aws_network_interface.web-server-eth0-nic.id}"
-}
-
 resource "aws_network_interface" "web-server-eth0-nic" {
   subnet_id = "${var.subnet_external_id}"
   private_ips = ["${var.private_ip}"]

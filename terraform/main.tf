@@ -15,7 +15,6 @@ module "web1vm" {
   subnet_external_id = "${module.thevpc.subnet_external_id}"
   sgroup_id = "${module.thevpc.external_sg_id}"
   private_ip="${var.web1_server_private_ip}"
-  web_server_eip_id="${var.web1_server_eip_id}"
 }
 
 module "web2vm" {
@@ -25,15 +24,19 @@ module "web2vm" {
   subnet_external_id = "${module.thevpc.subnet_external_id}"
   sgroup_id = "${module.thevpc.external_sg_id}"
   private_ip="${var.web2_server_private_ip}"
-  web_server_eip_id="${var.web2_server_eip_id}"
+}
+
+module "stepvm" {
+  source = "./stepvm"
+  aws_region="${var.aws_region}"
+  aws_availability_zone="${var.aws_availability_zone}"
+  subnet_external_id = "${module.thevpc.subnet_external_id}"
+  sgroup_id = "${module.thevpc.external_sg_id}"
+  private_ip="${var.step_server_private_ip}"
+  step_server_eip_id="${var.step_server_eip_id}"
 }
 
 module "rdsvm" {
   source = "./therds"
   aws_region="${var.aws_region}"
-  aws_availability_zone="${var.aws_availability_zone}"
-  subnet_external_id = "${module.thevpc.subnet_external_id}"
-  sgroup_id = "${module.thevpc.external_sg_id}"
-  private_ip="${var.web2_server_private_ip}"
-  web_server_eip_id="${var.web2_server_eip_id}"
 }

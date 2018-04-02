@@ -26,6 +26,7 @@ ln -s "$ORGCODEDIR/${mainscript/setup/destroy}" "$new_dir" || iferr_exit "ln to 
 
 "$ORGCODEDIR/phase1-setup-vpc.sh-new" "$DATADIR/aws" "$ORGCODEDIR/terraform/"
 "$ORGCODEDIR/phase1-setup-aws-web-vms.sh-new" "$DATADIR/aws"
+"$ORGCODEDIR/phase1-setup-aws-rds-vm.sh-new" "$DATADIR/aws"
 
 cat  >>"$DATADIR/datadir.conf" <<EOF || iferr_exit "datadir.conf init failed for $thisfile"
 EOF
