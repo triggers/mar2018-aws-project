@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source "$(dirname $(readlink -f "$0"))/bashsteps-bash-utils-jan2017.source" || exit
+
+existing_dir="$1"
+
+thisfile="${0##*/}"
+mainscript="${thisfile%-new}"
+
+existing_directory_for_datadir()
+{
+    ## If this file's name is the main script's filename + "-new", then
+    ## the following lines of code should be reusable:
+    [ "$thisfile" != "$mainscript" ] || iferr_exit 'required filename pattern not followed'
+    [ "$existing_dir" != "" ] || iferr_exit "First parameter should be an existing datadir"
+    [ -f "$existing_dir/datadir.conf" ] || iferr_exit "First parameter should be existing datadir"
+    eval_iferr_exit 'DATADIR="$(readlink -f "$existing_dir")"'
+    ln -s "$ORGCODEDIR/$mainscript" "$existing_dir" || iferr_exit "ln to $mainscript"
+}
+existing_directory_for_datadir
+
+eval_iferr_exit 'source "$DATADIR/datadir.conf"'
+
+# install the matching destroy script too
+ln -s "$ORGCODEDIR/${mainscript/setup/destroy}" "$existing_dir" || iferr_exit "ln to ${mainscript/setup/destroy}"
+
+
+## So far, nothing else to do here.
+
+echo "Success"
