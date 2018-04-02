@@ -16,7 +16,7 @@ source "$(dirname $(readlink -f "$0"))/bashsteps-defaults-jan2017-check-and-do.s
 	[[ "$a" == */web1.log ]] && [[ "$(tail -n 2 "$a")" == $pat ]]
 	$skip_step_if_already_done; set -ex
 	cd "$DATADIR/terraform"
-	"$ORGCODEDIR/bin/terraform" destroy -force -target=module.web1vm | tee -a web1.log
+	"$ORGCODEDIR/bin/terraform" destroy -force -target=module.web1vm  -target=module.web2vm  -target=module.stepvm | tee -a web1.log
     ) ; $iferr_exit
 
 ) ; $iferr_exit
