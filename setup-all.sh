@@ -29,6 +29,7 @@ extractIP()
     false
     $skip_group_if_unnecessary
     extractIP web1vm module.web1vm.aws_eip_association.web_eip_assoc
+    extractIP web2vm module.web2vm.aws_eip_association.web_eip_assoc
 ) ; $iferr_exit
 
 source "$DATADIR/datadir.conf"

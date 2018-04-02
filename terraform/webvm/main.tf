@@ -28,7 +28,7 @@ resource "aws_eip_association" "web_eip_assoc" {
 
 resource "aws_network_interface" "web-server-eth0-nic" {
   subnet_id = "${var.subnet_external_id}"
-  private_ips = ["10.10.33.154"]
+  private_ips = ["${var.private_ip}"]
   security_groups = ["${var.sgroup_id}"]
   source_dest_check = "false" # route pseudo internet on external subnet
   tags {
