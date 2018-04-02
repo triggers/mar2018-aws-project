@@ -5,3 +5,7 @@ variable "aws_region" {
 variable "aws_availability_zone" {
   description = "aws availability zone"
 }
+
+variable "aws_availability_zone2" {
+  description = "aws availability zone 2"
+}

@@ -35,6 +35,15 @@ resource "aws_subnet" "subnet_external" {
   }
 }
 
+resource "aws_subnet" "subnet2_external" {
+  vpc_id = "${aws_vpc.the_vpc.id}"
+  cidr_block = "10.10.55.0/24"
+  availability_zone = "${var.aws_availability_zone2}"
+  tags {
+    Name = "External Subnet2"
+  }
+}
+
 # https://www.terraform.io/docs/providers/aws/r/internet_gateway.html
 
 resource "aws_internet_gateway" "gw_external" {
@@ -113,4 +122,8 @@ output "external_sg_id" {
 
 output "subnet_external_id" {
   value = "${aws_subnet.subnet_external.id}"
+}
+
+output "subnet2_external_id" {
+  value = "${aws_subnet.subnet2_external.id}"
 }

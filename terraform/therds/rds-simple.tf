@@ -2,6 +2,8 @@ provider "aws" {
   region = "${var.aws_region}"
 }
 
+# https://www.terraform.io/docs/providers/aws/r/db_instance.html
+
 resource "aws_db_instance" "default" {
   allocated_storage    = 10
   storage_type         = "gp2"
